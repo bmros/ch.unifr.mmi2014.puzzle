@@ -214,7 +214,7 @@ public final class Game extends JComponent{
     			if (focus.col == 0) { // outermost left: cant swap
     				break;
     			} else {
-    				System.out.println("LEFT: swapping tile("+focus.col+","+focus.row+") with tile("+(focus.col-1)+","+focus.row+")");
+    				//System.out.println("LEFT: swapping tile("+focus.col+","+focus.row+") with tile("+(focus.col-1)+","+focus.row+")");
     				Tile swapTile = gameBoard.getTileAt(focus.row, focus.col-1);
     				swapTiles(focus,swapTile);
     				focus.inFocus = false;
@@ -226,7 +226,7 @@ public final class Game extends JComponent{
     			if (focus.row == 7) { // bottom row: cant swap
     				break;
     			} else {
-    				System.out.println("DOWN: swapping tile("+focus.col+","+focus.row+") with tile("+(focus.col)+","+(focus.row+1)+")");
+    				//System.out.println("DOWN: swapping tile("+focus.col+","+focus.row+") with tile("+(focus.col)+","+(focus.row+1)+")");
     				Tile swapTile = gameBoard.getTileAt(focus.row+1, focus.col);
     				swapTiles(focus,swapTile);
     				focus.inFocus = false;
@@ -239,7 +239,7 @@ public final class Game extends JComponent{
     			if (focus.col == 7) { // outermost right: cant swap
     				break;
     			} else {
-    				System.out.println("RIGHT: swapping tile("+focus.col+","+focus.row+") with tile("+(focus.col+1)+","+focus.row+")");
+    				//System.out.println("RIGHT: swapping tile("+focus.col+","+focus.row+") with tile("+(focus.col+1)+","+focus.row+")");
     				Tile swapTile = gameBoard.getTileAt(focus.row, focus.col+1);
     				swapTiles(focus,swapTile);
     				focus.inFocus = false;
@@ -251,7 +251,7 @@ public final class Game extends JComponent{
     			if (focus.row == 0) { // top row: cant swap
     				break;
     			} else {
-    				System.out.println("UP: swapping tile("+focus.col+","+focus.row+") with tile("+(focus.col)+","+(focus.row+1)+")");
+    				//System.out.println("UP: swapping tile("+focus.col+","+focus.row+") with tile("+(focus.col)+","+(focus.row+1)+")");
     				Tile swapTile = gameBoard.getTileAt(focus.row-1, focus.col);
     				swapTiles(focus,swapTile);
     				focus.inFocus = false;

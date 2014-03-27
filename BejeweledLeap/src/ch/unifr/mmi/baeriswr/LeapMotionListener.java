@@ -16,6 +16,8 @@ import java.lang.Math;
 
 //import ch.unifr.baeriswr.SampleListener;
 
+import java.util.Date;
+
 import com.leapmotion.leap.*;
 import com.leapmotion.leap.Gesture.State;
 /*
@@ -24,15 +26,17 @@ import com.leapmotion.leap.Gesture.State;
 public class LeapMotionListener extends MouseInputAdapter {
     private Game gamePanel;
     private Sample leapMotionSample;
+    private Date lastSwipeUpdate;
+    private Date lastFingerUpdate;
+    
     
     public LeapMotionListener(Game gamePanel){
         this.gamePanel = gamePanel;
         //this.leapMotionSample = new Sample(gamePanel);
         (new Thread(this.leapMotionSample = new Sample(this))).start();
-        
-        
-        
+     
     }
+    
     public void mouseClicked (MouseEvent e){
       int col = (e.getX()-240)/65;
       int row = (e.getY()-40)/65;
@@ -44,13 +48,29 @@ public class LeapMotionListener extends MouseInputAdapter {
       gamePanel.repaint();
     }
     
+    /**
+     * tells the gamePanel the current finger position
+     * @param avgPos
+     */
     public void currentFingerPosition(Vector avgPos) {
-    	float xCord = avgPos.getX();
-    	float yCord = avgPos.getY();
-    	float zCord = avgPos.getZ();
+    	//float xCord = avgPos.getX();
+    	//float yCord = avgPos.getY();
+    	//float zCord = avgPos.getZ();
+    	Date currentT = new Date();
+    	// first update
+    	if (lastFingerUpdate == null) {
+    		lastFingerUpdate = new Date();
+    	} else if (currentT.getTime() - lastFingerUpdate.getTime() < 100) { // don't send swipe notifications repeatedly, wait at least 300 ms
+    		return;
+    	}
+    	lastFingerUpdate = currentT;
     	
-    	int col = ((int)avgPos.getX()+240)/65;
-        int row = (500-(int)avgPos.getY()-40)/65;
+    	
+    	
+    	//int col = ((int)avgPos.getX()+240)/65;
+        //int row = (500-(int)avgPos.getY()-40)/65;
+    	int col = ((int)avgPos.getX()+240)/45;
+        int row = (500-(int)avgPos.getY()-40)/45;
         if (col < 0) col = 0;
         if (col > 7) col = 7;
         if (row < 0) row = 0;
@@ -65,6 +85,48 @@ public class LeapMotionListener extends MouseInputAdapter {
         gamePanel.showFingerFocus(col, row);
         gamePanel.repaint();
 
+    }
+    
+    /**
+     * tells the gamePanel to swap tiles in the given direction
+     * @param direction
+     */
+    public void swipeDetected(String direction) {
+    	Date currentT = new Date();
+    	// public static long test = Date.currentTimeMillis();
+    	
+    	// first update
+    	if (lastSwipeUpdate == null) {
+    		lastSwipeUpdate = new Date();
+    	} else if (currentT.getTime() - lastSwipeUpdate.getTime() < 500) { // don't send swipe notifications repeatedly, wait at least 300 ms
+    		return;
+    	}
+    	lastSwipeUpdate = currentT;
+    	switch(direction) {
+    	case ("up"): {
+    		gamePanel.directionPerformed(4);
+    		break;
+    	}
+    	case ("down"): {
+    		gamePanel.directionPerformed(2);
+    		
+    		break;
+    	}
+    	case ("left"): {
+    		gamePanel.directionPerformed(1);
+    		break;
+    	}
+    	case ("right"): {
+    		gamePanel.directionPerformed(3);
+    		break;
+    	}
+    	default: break;
+    	
+    	}
+    	
+    	
+    	
+    	
     }
     
     
@@ -146,7 +208,7 @@ class SampleListener extends Listener {
                              + "yaw: " + Math.toDegrees(direction.yaw()) + " degrees");
             */
         }
-        /*
+        
         GestureList gestures = frame.gestures();
         for (int i = 0; i < gestures.count(); i++) {
             Gesture gesture = gestures.get(i);
@@ -185,6 +247,37 @@ class SampleListener extends Listener {
                                + ", position: " + swipe.position()
                                + ", direction: " + swipe.direction()
                                + ", speed: " + swipe.speed());
+                    
+                    // check which hand did perform the gesture
+                    if (!frame.hands().isEmpty()) {
+                        // Get the first hand
+                        Hand hand = frame.hands().get(0);
+                        // check if this is the correct hand for gestures
+                        if (! hand.equals(gesture.hands().get(0))) { 
+                        	boolean isHorizontal = Math.abs(swipe.direction().getX()) > Math.abs(swipe.direction().getY());
+                            String swipeDirection;
+                            //Classify as right-left or up-down
+              				if(isHorizontal){
+                  				if(swipe.direction().getX() > 0){
+                      				swipeDirection = "right";
+                  				} else {
+                      				swipeDirection = "left";
+                  				}
+              				} else { //vertical
+                  				if(swipe.direction().getY() > 0){
+                      				swipeDirection = "up";
+                  				} else {
+                      				swipeDirection = "down";
+                  				}                  
+              				}
+              				
+              				//System.out.println("classified direction: " + swipeDirection);
+              				//System.out.println("gesture hands: " + gesture.hands().get(0).toString());
+              				gamePanel.swipeDetected(swipeDirection);
+                        }
+                        
+                    }
+                    
                     break;
                 case TYPE_SCREEN_TAP:
                     ScreenTapGesture screenTap = new ScreenTapGesture(gesture);
@@ -205,7 +298,7 @@ class SampleListener extends Listener {
                     break;
             }
         }
-
+        /*
         if (!frame.hands().isEmpty() || !gestures.isEmpty()) {
             System.out.println();
         }
