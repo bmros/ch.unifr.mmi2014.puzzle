@@ -1,0 +1,12 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Grammar for Hello World example
+ */
+
+grammar command;
+
+public <up> = (top);
+public <down> = (down);
+public <left> = (left);
+public <right> = (right);
