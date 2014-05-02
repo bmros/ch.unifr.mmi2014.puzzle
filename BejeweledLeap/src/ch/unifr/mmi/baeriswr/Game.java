@@ -50,7 +50,10 @@ public final class Game extends JComponent{
         this.setPreferredSize(new Dimension(800,600)); 
         // Leap Motion Listener
         this.addMouseListener(new LeapMotionListener(this));
-        KeyboardListener k = new KeyboardListener(this);        
+        KeyboardListener k = new KeyboardListener(this);    
+        // Voice Recognition Listener
+        VoiceListener v = new VoiceListener(this);
+        
         //this.addKeyListener(new KeyboardListener(this));
         this.addMouseListener(new MouseListener(this));
         //System.out.println("is focusable: "+this.isFocusable());
@@ -113,6 +116,7 @@ public final class Game extends JComponent{
         }
     }
     public void clickPerformed(int click_x,int click_y) {
+    	System.out.println("click at "+click_x+" / "+click_y);
         sPanel.setColumn(click_x);
         sPanel.setRow(click_y);
         Tile clicked = gameBoard.getTileAt(click_y, click_x);

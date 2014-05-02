@@ -4,6 +4,9 @@ import java.util.Random;
 import java.util.ArrayList;
 /*
  this class keeps track of the tiles in a 2D array
+ 
+ 
+ LeapMotion Evaluation: Use the same (random) board for each user -> save a default configuration
  */
 public final class Board {
     private Tile gems[][];

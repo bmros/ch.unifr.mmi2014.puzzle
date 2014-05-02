@@ -38,6 +38,7 @@ public class LeapMotionListener extends MouseInputAdapter {
     }
     
     public void mouseClicked (MouseEvent e){
+    	/*
       int col = (e.getX()-240)/65;
       int row = (e.getY()-40)/65;
       if (col < 0) col = 0;
@@ -46,6 +47,7 @@ public class LeapMotionListener extends MouseInputAdapter {
       if (row > 7) row = 7;
       gamePanel.clickPerformed(col, row);
       gamePanel.repaint();
+      */
     }
     
     /**
