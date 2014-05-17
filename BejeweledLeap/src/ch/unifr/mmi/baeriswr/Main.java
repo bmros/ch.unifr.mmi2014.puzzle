@@ -22,8 +22,8 @@ public class Main extends JFrame{
          StatePanel sPanel = new StatePanel();
          Game newGame = new Game(sPanel);
          ControlPanel cPanel = new ControlPanel(newGame);
-         content.add(newGame,BorderLayout.CENTER);
-         content.add(sPanel,BorderLayout.WEST);
+         content.add(newGame,BorderLayout.NORTH);
+         content.add(sPanel,BorderLayout.CENTER);
          content.add(cPanel,BorderLayout.SOUTH);
          content.setFocusable(true);
          //set visible

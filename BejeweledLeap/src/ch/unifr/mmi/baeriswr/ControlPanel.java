@@ -24,8 +24,7 @@ public class ControlPanel extends JPanel implements ActionListener {
       if (e.getSource().equals(newGameButton)){
             game.initGame();
       }
-      if (e.getSource().equals(cheat))
-          game.addScore(500);
+
       if (e.getSource().equals(exit))
           System.exit(0);
    }
