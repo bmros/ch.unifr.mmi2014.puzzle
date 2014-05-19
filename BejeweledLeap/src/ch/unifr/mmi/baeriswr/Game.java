@@ -54,7 +54,7 @@ public final class Game extends JComponent{
         // Voice Recognition Listener
         VoiceListener v = new VoiceListener(this);
         
-        //this.addKeyListener(new KeyboardListener(this));
+        this.addKeyListener(new KeyboardListener(this));
         this.addMouseListener(new MouseListener(this));
         //System.out.println("is focusable: "+this.isFocusable());
         this.setFocusable(true);
@@ -204,6 +204,72 @@ public final class Game extends JComponent{
      */
     public void directionPerformed(int direction) {
     	if (fingerFocus == null) {
+    		if(focus != null) {
+    			switch(direction) {
+        		case 1: { //left
+        			if (focus.col == 0) { // outermost left: cant swap
+        				break;
+        			} else {
+        				//System.out.println("LEFT: swapping tile("+focus.col+","+focus.row+") with tile("+(focus.col-1)+","+focus.row+")");
+        				Tile swapTile = gameBoard.getTileAt(focus.row, focus.col-1);
+        				swapTiles(focus,swapTile);
+        				focus.inFocus = false;
+        				focus = null;
+        				break;
+        			}
+        		}
+        		case 2: { // down
+        			if (focus.row == 7) { // bottom row: cant swap
+        				break;
+        			} else {
+        				//System.out.println("DOWN: swapping tile("+focus.col+","+focus.row+") with tile("+(focus.col)+","+(focus.row+1)+")");
+        				Tile swapTile = gameBoard.getTileAt(focus.row+1, focus.col);
+        				swapTiles(focus,swapTile);
+        				focus.inFocus = false;
+        				focus = null;
+        				break;
+        			}
+        			
+        		}
+        		case 3: { // right
+        			if (focus.col == 7) { // outermost right: cant swap
+        				break;
+        			} else {
+        				//System.out.println("RIGHT: swapping tile("+focus.col+","+focus.row+") with tile("+(focus.col+1)+","+focus.row+")");
+        				Tile swapTile = gameBoard.getTileAt(focus.row, focus.col+1);
+        				swapTiles(focus,swapTile);
+        				focus.inFocus = false;
+        				focus = null;
+        				break;
+        			}
+        		}
+        		case 4: { // up
+        			if (focus.row == 0) { // top row: cant swap
+        				break;
+        			} else {
+        				//System.out.println("UP: swapping tile("+focus.col+","+focus.row+") with tile("+(focus.col)+","+(focus.row+1)+")");
+        				Tile swapTile = gameBoard.getTileAt(focus.row-1, focus.col);
+        				swapTiles(focus,swapTile);
+        				focus.inFocus = false;
+        				focus = null;
+        				break;
+        			}
+        		}
+        		default: { // not valid
+        			break;
+        		}
+        		}
+        		if (focus != null) {
+        			focus.inFocus = false;
+            		focus = null;
+        		}
+    			
+    			
+    			
+    			
+    		}
+    		
+    		
     		// do nothing
     	} else {
     		if(focus != null) {

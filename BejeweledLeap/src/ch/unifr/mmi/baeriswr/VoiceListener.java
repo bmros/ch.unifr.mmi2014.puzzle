@@ -35,6 +35,7 @@ public class VoiceListener {
 	}
 	
 	protected void keyPressed(int direction) {
+		//System.out.println("direction: "+direction);
 		gamePanel.directionPerformed(direction);
 		
 	}
@@ -88,7 +89,7 @@ class SpeechCommand implements Runnable {
 		case ("left"): voicelistener.keyPressed(1);break;
 		case ("down"): voicelistener.keyPressed(2);break;
 		case ("right"): voicelistener.keyPressed(3);break;
-		case ("up"): voicelistener.keyPressed(4);break;
+		case ("top"): voicelistener.keyPressed(4);break;
 		// others?
 		// case ("left"): voicelistener.keyPressed(1);break;
 		default: break;

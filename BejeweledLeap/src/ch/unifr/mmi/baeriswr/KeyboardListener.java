@@ -7,7 +7,7 @@ import java.awt.event.KeyListener;
 
 
 
-public class KeyboardListener {
+public class KeyboardListener implements KeyListener {
 	
 	private Game gamePanel;
 
@@ -18,6 +18,7 @@ public class KeyboardListener {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) { // ENTER: set focus
 					setFocus();
 				}
+				/*
 				switch (e.getKeyCode()) {
 				case (KeyEvent.VK_LEFT): gamePanel.directionPerformed(1);break;
 				case (KeyEvent.VK_RIGHT): gamePanel.directionPerformed(3);break;
@@ -25,14 +26,22 @@ public class KeyboardListener {
 				case (KeyEvent.VK_UP): gamePanel.directionPerformed(4);break;
 				default: break;
 				}
+				*/
+				switch (e.getKeyCode()) {
+				case (KeyEvent.VK_LEFT): keyPressed(1);break;
+				case (KeyEvent.VK_RIGHT): keyPressed(3);break;
+				case (KeyEvent.VK_DOWN): keyPressed(2);break;
+				case (KeyEvent.VK_UP): keyPressed(4);break;
+				default: break;
+				}
 				
 				
 				
-				//System.out.println("tester");
+				System.out.println("tester");
 			} else if (e.getID() == KeyEvent.KEY_RELEASED) {
-				//System.out.println("2test2");
+				System.out.println("2test2");
 			} else if (e.getID() == KeyEvent.KEY_TYPED) {
-				//System.out.println("3test3");
+				System.out.println("3test3");
 			}
 			return false;
 		}
@@ -53,6 +62,24 @@ public class KeyboardListener {
 	
 	private void keyPressed(int direction) {
 		gamePanel.directionPerformed(direction);
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 	
